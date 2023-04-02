@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace StringCalculator
 {
-    public class StringCalculator
+    public class StringCalculator : IStringCalculator
     {
         public int Add(string numbersString)
         {
             int sum = 0;
             var numbers = ToArray(numbersString);
-            if (numbers == null) 
+            if (numbers == null)
                 return 0;
             if (numbers.Length > 3)
                 throw new Exception("Input should be from 0 to 3 numbers");
