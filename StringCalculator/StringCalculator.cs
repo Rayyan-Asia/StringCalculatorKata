@@ -14,8 +14,6 @@ namespace StringCalculator
             var numbers = ToArray(numbersString);
             if (numbers == null)
                 return 0;
-            if (numbers.Length > 3)
-                throw new Exception("Input should be from 0 to 3 numbers");
             foreach (int number in numbers)
             {
                 sum += number;
@@ -25,12 +23,21 @@ namespace StringCalculator
 
         private int[]? ToArray(string numbersString)
         {
-            if (numbersString.Replace(" ", "") == "")
+            numbersString = numbersString.Trim();
+            numbersString = numbersString.Replace(" ", "");
+            if (numbersString ==  "")
                 return null;
             string[] numbersStringArray = numbersString.Split(',');
             int[] numbers = new int[numbersStringArray.Length];
             for (int i = 0; i < numbersStringArray.Length; i++)
-                numbers[i] = int.Parse(numbersStringArray[i]);
+            {
+                if (numbersStringArray[i] != "")
+                {
+                    numbers[i] = int.Parse(numbersStringArray[i]);
+                }
+                else
+                    numbers[i] = 0;
+            }
             return numbers;
         }
     }

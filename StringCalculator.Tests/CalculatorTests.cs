@@ -24,6 +24,20 @@ public class CalculatorTests
     }
 
     [Fact]
+    public void ShouldSkipTheSecondinput()
+    {
+        // Arrange
+        var numbers = "1, ,3";
+        var expected = 4;
+
+        //Act
+        var sum = _calculator.Add(numbers);
+
+        //Assert
+        Assert.Equal(expected, sum);
+    }
+
+    [Fact]
     public void ShouldReturnZero()
     {
         // Arrange
@@ -53,13 +67,16 @@ public class CalculatorTests
     }
 
     [Fact]
-    public void ShouldThrowAnException()
+    public void ShouldReturnSumOfNumbers()
     {
+        // Arrange
+        var numbers = "1,2,3,4,5";
+        var expected = 15;
 
-        //Arrange
-        var numbers = "1,2,3,4";
+        //Act
+        var sum = _calculator.Add(numbers);
 
-        //Act and Assert 
-        Assert.Throws<Exception>(() => _calculator.Add(numbers));
+        //Assert
+        Assert.Equal(expected, sum);
     }
 }
