@@ -15,9 +15,8 @@ namespace StringCalculator
             if (numbers == null)
                 return 0;
             foreach (int number in numbers)
-            {
                 sum += number;
-            }
+            
             return sum;
         }
 
