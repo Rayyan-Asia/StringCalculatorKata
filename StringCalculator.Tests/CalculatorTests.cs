@@ -75,4 +75,25 @@ public class CalculatorTests
         //Assert
         Assert.Equal(expected, sum);
     }
+
+    [Theory]
+    [InlineData("//;\n1;2;3;4\n5",15)]
+    [InlineData("//.\n1.2.3.4\n5", 15)]
+    public void ShouldTakeCustomDelimiterAndCalculateSumOfNumbers(string numbers, int expected)
+    {
+        //Act
+        var sum = _calculator.Add(numbers);
+
+        //Assert
+        Assert.Equal(expected, sum);
+    }
+
+    [Theory]
+    [InlineData("//\n1;2;3;4\n5")]
+    public void ShouldThrowExceptionForForgottenCustomDelimiter(string numbers)
+    {
+        //Act and Assert
+        Assert.Throws<Exception>(() => _calculator.Add(numbers));
+    }
+
 }

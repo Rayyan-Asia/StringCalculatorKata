@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace StringCalculator
@@ -11,7 +12,7 @@ namespace StringCalculator
         public int Add(string numbersString)
         {
             int sum = 0;
-            var numbers = ToArray(numbersString);
+            var numbers = ToArrayOfNumbers(numbersString);
             if (numbers == null)
                 return 0;
             foreach (int number in numbers)
@@ -20,14 +21,22 @@ namespace StringCalculator
             return sum;
         }
 
-        private int[]? ToArray(string numbersString)
+        private int[]? ToArrayOfNumbers(string numbersString)
         {
             numbersString = numbersString.Trim();
             numbersString = numbersString.Replace(" ", "");
             if (numbersString == "")
                 return null;
-            char[] delimiters = { ',', '\n' };
+            var delimeter = ',';
+            ParseCustomDelimiter(ref numbersString, ref delimeter);
+            char[] delimiters = { delimeter, '\n' };
             string[] numbersStringArray = numbersString.Split(delimiters);
+            return ParseNumbersFromString(numbersStringArray);
+            
+        }
+
+        private static int[] ParseNumbersFromString(string[] numbersStringArray)
+        {
             int[] numbers = new int[numbersStringArray.Length];
             for (int i = 0; i < numbersStringArray.Length; i++)
             {
@@ -39,6 +48,25 @@ namespace StringCalculator
                     numbers[i] = 0;
             }
             return numbers;
+        }
+
+        private static void ParseCustomDelimiter(ref string numbersString, ref char delimeter)
+        {
+            if (numbersString.StartsWith("//"))
+            {
+                numbersString = numbersString.Replace("//", "");
+                int index = numbersString.IndexOf("\n");
+                var delimeterString = numbersString[..index];
+                if (delimeterString.Length == 1 && !Regex.IsMatch(delimeterString, @"^[0-9]+$"))
+                {
+                    delimeter = delimeterString[0];
+                    numbersString = numbersString[1..];
+                }
+                else
+                {
+                    throw new Exception("Forgot to give custom Delimiter");
+                }
+            }
         }
     }
 }
