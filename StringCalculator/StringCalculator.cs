@@ -32,7 +32,7 @@ namespace StringCalculator
             char[] delimiters = { delimeter, '\n' };
             string[] numbersStringArray = numbersString.Split(delimiters);
             return ParseNumbersFromString(numbersStringArray);
-            
+
         }
 
         private static int[] ParseNumbersFromString(string[] numbersStringArray)
@@ -42,7 +42,10 @@ namespace StringCalculator
             {
                 if (numbersStringArray[i] != "")
                 {
-                    numbers[i] = int.Parse(numbersStringArray[i]);
+                    var parsedNumber = int.Parse(numbersStringArray[i]);
+                    if (parsedNumber < 0)
+                        throw new ArgumentOutOfRangeException("Cannot have negative numbers.");
+                    numbers[i] = parsedNumber;
                 }
                 else
                     numbers[i] = 0;
@@ -64,7 +67,7 @@ namespace StringCalculator
                 }
                 else
                 {
-                    throw new Exception("Forgot to give custom Delimiter");
+                    throw new ArgumentException("Forgot to give custom Delimiter");
                 }
             }
         }

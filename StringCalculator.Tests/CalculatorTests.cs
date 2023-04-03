@@ -10,7 +10,7 @@ public class CalculatorTests
     }
 
     [Theory]
-    [InlineData("1,2,3",6)]
+    [InlineData("1,2,3", 6)]
     public void ShouldReturnCorrectSumOfThreeNumbers(string numbers, int expected)
     {
         //Act
@@ -77,7 +77,7 @@ public class CalculatorTests
     }
 
     [Theory]
-    [InlineData("//;\n1;2;3;4\n5",15)]
+    [InlineData("//;\n1;2;3;4\n5", 15)]
     [InlineData("//.\n1.2.3.4\n5", 15)]
     public void ShouldTakeCustomDelimiterAndCalculateSumOfNumbers(string numbers, int expected)
     {
@@ -88,12 +88,22 @@ public class CalculatorTests
         Assert.Equal(expected, sum);
     }
 
-    [Theory]
-    [InlineData("//\n1;2;3;4\n5")]
-    public void ShouldThrowExceptionForForgottenCustomDelimiter(string numbers)
+    [Fact]
+    public void ShouldThrowExceptionForForgottenCustomDelimiter()
     {
+        //Arrange 
+        string numbers = "//\n1;2;3;4\n5";
         //Act and Assert
-        Assert.Throws<Exception>(() => _calculator.Add(numbers));
+        Assert.Throws<ArgumentException>(() => _calculator.Add(numbers));
+    }
+
+    [Fact]
+    public void ShouldThrowExceptionForNegativeNumber()
+    {
+        //Arrange 
+        string numbers = "1,2,3,-4\n5";
+        //Act and Assert
+        Assert.Throws<ArgumentOutOfRangeException>(() => _calculator.Add(numbers));
     }
 
 }
