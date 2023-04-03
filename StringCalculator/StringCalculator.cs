@@ -16,7 +16,10 @@ namespace StringCalculator
             if (numbers == null)
                 return 0;
             foreach (int number in numbers)
-                sum += number;
+            {
+                if (number <= 1000)
+                    sum += number;
+            }
 
             return sum;
         }
@@ -44,7 +47,10 @@ namespace StringCalculator
                 {
                     var parsedNumber = int.Parse(numbersStringArray[i]);
                     if (parsedNumber < 0)
-                        throw new ArgumentOutOfRangeException("Cannot have negative numbers.");
+                    {
+                        throw new ArgumentOutOfRangeException("Process does not accept negative numbers.");
+                    }
+
                     numbers[i] = parsedNumber;
                 }
                 else
@@ -67,7 +73,7 @@ namespace StringCalculator
                 }
                 else
                 {
-                    throw new ArgumentException("Forgot to give custom Delimiter");
+                    throw new Exception("Forgot to give custom Delimiter");
                 }
             }
         }
