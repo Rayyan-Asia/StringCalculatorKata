@@ -64,4 +64,15 @@ public class CalculatorTests
         //Assert
         Assert.Equal(expected, sum);
     }
+
+    [Theory]
+    [InlineData("\n1\n2,3\n4,5\n", 15)]
+    public void ShouldSplitNewLineAndCalculateSumOfNumbers(string numbers, int expected)
+    {
+        //Act
+        var sum = _calculator.Add(numbers);
+
+        //Assert
+        Assert.Equal(expected, sum);
+    }
 }

@@ -16,7 +16,7 @@ namespace StringCalculator
                 return 0;
             foreach (int number in numbers)
                 sum += number;
-            
+
             return sum;
         }
 
@@ -24,9 +24,10 @@ namespace StringCalculator
         {
             numbersString = numbersString.Trim();
             numbersString = numbersString.Replace(" ", "");
-            if (numbersString ==  "")
+            if (numbersString == "")
                 return null;
-            string[] numbersStringArray = numbersString.Split(',');
+            char[] delimiters = { ',', '\n' };
+            string[] numbersStringArray = numbersString.Split(delimiters);
             int[] numbers = new int[numbersStringArray.Length];
             for (int i = 0; i < numbersStringArray.Length; i++)
             {
